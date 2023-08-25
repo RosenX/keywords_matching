@@ -3,8 +3,8 @@ use html_keywords_matching::{MatchResult, Trie};
 fn main() {
     let mut trie = Trie::new();
     trie.build(vec![
-        "OpenAI".to_string(),
-        "Stack Overflow".to_string(),
+        "openai".to_string(),
+        "stack overflow".to_string(),
         "prompt engineering".to_string(),
     ]);
 

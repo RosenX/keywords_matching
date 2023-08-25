@@ -102,7 +102,8 @@ impl Trie {
         let mut match_result = HashMap::<String, usize>::new();
         let mut modify_text = String::new();
         let mut byte_index: Vec<usize> = vec![];
-        for (i, c) in text.char_indices() {
+        for (i, mut c) in text.char_indices() {
+            c = c.to_ascii_lowercase();
             byte_index.push(i);
             let mut child = p_ref.borrow().get_child(&c);
             while child.is_none() {
@@ -124,7 +125,7 @@ impl Trie {
                         let word_len = p_ref.borrow().depth;
                         let start = byte_index[byte_index.len() - word_len];
                         let end = i + c.len_utf8();
-                        let word = &text[start..end];
+                        let word = &text[start..end].to_ascii_lowercase().to_string();
                         let count = match_result.entry(word.to_string()).or_insert(0);
                         *count += 1;
                         // pop word_len-1 char from modify_text
