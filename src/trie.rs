@@ -49,6 +49,7 @@ impl Trie {
         for word in words {
             self.insert(word);
         }
+        self.build_fail_point()
     }
 
     fn insert(&mut self, word: String) {
@@ -98,7 +99,7 @@ impl Trie {
 
     pub fn search_replace(&self, text: &String) -> MatchResult {
         let mut p_ref = self.root.clone();
-        let mut res = vec![];
+        let mut match_result = HashMap::<String, usize>::new();
         let mut modify_text = String::new();
         let mut byte_index: Vec<usize> = vec![];
         for (i, c) in text.char_indices() {
@@ -124,8 +125,8 @@ impl Trie {
                         let start = byte_index[byte_index.len() - word_len];
                         let end = i + c.len_utf8();
                         let word = &text[start..end];
-                        res.push(word.to_string());
-
+                        let count = match_result.entry(word.to_string()).or_insert(0);
+                        *count += 1;
                         // pop word_len-1 char from modify_text
                         for _ in 0..word_len - 1 {
                             modify_text.pop();
@@ -145,8 +146,8 @@ impl Trie {
             }
         }
         MatchResult {
-            match_words: res,
-            modify_text,
+            match_words: match_result,
+            modified_html: modify_text,
         }
     }
 }
