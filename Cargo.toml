@@ -1,5 +1,8 @@
 [package]
 name = "html-keywords-matching"
+license = "MIT OR Apache-2.0"
+description = "use ac trie to match keywords in html and replace them with a span tag"
+repository = "https://github.com/RosenX/keywords_matching"
 version = "0.1.0"
 edition = "2021"
 
