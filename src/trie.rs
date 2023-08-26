@@ -4,16 +4,7 @@ use std::{
     rc::Rc,
 };
 
-use crate::MatchResult;
-
-type TrieNodeRef = Rc<RefCell<TrieNode>>;
-
-struct TrieNode {
-    is_end_words: bool,
-    children: HashMap<char, TrieNodeRef>,
-    fail: Option<TrieNodeRef>,
-    depth: usize,
-}
+use crate::{MatchResult, Trie, TrieNode, TrieNodeRef};
 
 impl TrieNode {
     fn new(depth: usize) -> Self {
@@ -32,10 +23,6 @@ impl TrieNode {
     fn get_fail(&self) -> Option<TrieNodeRef> {
         self.fail.as_ref().map(|x| x.clone())
     }
-}
-
-pub struct Trie {
-    root: TrieNodeRef,
 }
 
 impl Trie {
